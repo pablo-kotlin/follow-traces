@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/min_padding">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/addPlaceMap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/place_data"
+        android:contentDescription="@string/app_name"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/place_data"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintHeight_percent="0.33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_save">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_place_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_hint_place_name"
+            app:endIconMode="clear_text"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_place_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:maxLength="75"
+                android:maxLines="1"
+                android:minLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinner_place_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_place_name"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:entries="@array/place_types"
+            tools:listitem="@android:layout/simple_spinner_dropdown_item" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_place_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/input_hint_place_comments"
+            app:endIconMode="clear_text"
+            android:maxLines="3"
+            android:minLines="3"
+            style="@style/Widget.Design.TextInputLayout"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinner_place_type">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_place_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="300"
+                android:maxLines="3"
+                android:minLines="3"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ToggleButton
+            android:id="@+id/btnLike"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_like_big"
+            android:textOn=""
+            android:textOff=""
+            android:contentDescription="@string/btn_like"
+            android:layout_margin="@dimen/default_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_place_comments"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ToggleButton
+            android:id="@+id/btnDislike"
+            android:layout_width="36dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_dislike_big"
+            android:textOn=""
+            android:textOff=""
+            android:contentDescription="@string/btn_like"
+            android:layout_margin="@dimen/default_padding"
+            app:layout_constraintEnd_toStartOf="@id/btnLike"
+            app:layout_constraintTop_toBottomOf="@id/input_place_comments"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:text="@string/btn_save"
+        android:textColor="@color/secondaryTextColor"
+        android:layout_marginBottom="@dimen/default_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

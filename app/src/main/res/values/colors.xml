@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores primarios -->
+    <color name="colorPrimary">#A0522D</color>
+    <color name="colorPrimaryDark">#603211</color>
+    <color name="colorPrimaryLight">#D2691E</color>
+
+    <!-- Colores secundarios -->
+    <color name="colorSecondary">#007BA7</color>
+    <color name="colorSecondaryDark">#004E6F</color>
+    <color name="colorSecondaryLight">#4EB1D1</color>
+
+    <!-- Colores para el texto -->
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#FFFFFF</color>
+
+    <color name="verde">#317f43</color>
+    <color name="granate">#a52019</color>
+    <color name="gray_light">#B8B8B8</color>
+
+</resources>
+

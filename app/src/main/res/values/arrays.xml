@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="place_types">
+        <item>Restaurante</item>
+        <item>Alojamiento</item>
+        <item>Tienda</item>
+        <item>Zona Verde</item>
+        <item>Otros</item>
+    </string-array>
+</resources>

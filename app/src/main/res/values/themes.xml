@@ -1,0 +1,36 @@
+<resources>
+    <style name="Base.Theme.DogplaceProject" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="Theme.DogplaceProject" parent="Base.Theme.DogplaceProject">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/secondaryTextColor</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryDark</item>
+        <item name="colorOnSecondary">@color/colorSecondaryLight</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <item name="android:textColorPrimaryInverse">@color/secondaryTextColor</item>
+
+        <item name="android:fontFamily">@font/kghappysolid</item>
+
+    </style>
+
+    <style name="Theme.DogplaceProject.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.DogplaceProject.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DogplaceProject.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
