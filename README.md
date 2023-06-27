@@ -1,7 +1,10 @@
 # Sigue mis huellas
 
 <p align="center">
-  <img width="512" alt="Logo" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/73ec4789-9d4d-43e5-ad7e-23764f742eb3">
+  <img width="512" alt="Logo" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/e2b88c19-6687-4a80-934e-337c09018943">
+</p>
+<p align="center">
+  <img width="512" alt="Logo" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/fde86be0-4b5e-4a44-94d1-6079e2c28025">
 </p>
 
 Esta app todavía está en una versión beta, pero la mayor parte de sus funcionalidades están 100% habilitadas.
@@ -31,25 +34,24 @@ API de Google Maps: Proporciona acceso a la funcionalidad de mapas y servicios r
 A continuación se muestran algunas capturas de pantalla de las diferentes actividades por las que navegaremos en nuestra aplicación:
 
 <p align="center">
-  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/a81fd437-37aa-4571-84d1-97a2ecf07b4f">
+  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/a2a6d04d-2b80-4d00-9369-eb890fde9def">
 </p>
 
 <p align="center">
-  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/05604ef7-bbe8-4df3-a0fa-a70600e4bd8c">
+  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/c66ea3c1-4346-4dd7-8c95-4912c1df98ed">
 </p>
 
 <p align="center">
-  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/c069212a-4639-47f1-9262-4ddaafc31c31">
+  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/6e950c7f-a4e2-4bf1-ac4f-3d6ac69d86b4">
 </p>
 
 <p align="center">
-  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/0a0e2c71-5e9b-48f8-b54b-0824fa4c3ea4">
+  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/69c23717-e314-4a14-a0fc-f08afbc4b9e5">
 </p>
 
 <p align="center">
-  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/20db03ec-1097-4220-927f-8eaac02eb36b">
+  <img width="300" alt="Screenshot_20220609_211305" src="https://github.com/pablo-kotlin/follow-traces/assets/128930557/9082aff5-297a-4cc5-8b33-b02cd54d0ec3">
 </p>
-
 
 ## Requisitos funcionales
 
