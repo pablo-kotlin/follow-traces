@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ExploreActivity"
+    tools:context=".ui.activities.ExploreActivity"
     android:padding="@dimen/min_padding">
 
     <com.google.android.material.button.MaterialButton

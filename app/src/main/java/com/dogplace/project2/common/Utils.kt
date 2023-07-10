@@ -18,8 +18,34 @@ import org.json.JSONException
 object Utils {
 
     fun getToken(context: Context): String {
-        val sharedPreferences = context.getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            context.getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
         return sharedPreferences.getString("token", "") ?: ""
+    }
+
+    fun cleanOldTokens(context: Context) {
+        val requestQueue: RequestQueue = Volley.newRequestQueue(context)
+        val token = getToken(context)
+        val stringRequest = object : StringRequest(
+            Method.POST, Constants.PATH_DELETE_TOKEN,
+            { response ->
+                try {
+                    Log.i("MSG", response)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error ->
+                Log.i("ERROR", error.toString())
+            }
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["access_token"] = token
+                return params
+            }
+        }
+        requestQueue.add(stringRequest)
     }
 
     fun parseUbicaciones(response: JSONArray): List<Ubicacion> {

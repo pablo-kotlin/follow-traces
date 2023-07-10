@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".DetailsPlaceActivity">
+        tools:context=".ui.activities.DetailsPlaceActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_comments"
@@ -28,7 +28,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_place_detail"/>
+            tools:listitem="@layout/item_place_detail" />
 
     </androidx.core.widget.NestedScrollView>
 
