@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
 
+    // MAPS API KEY
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -13,8 +15,8 @@ android {
         applicationId "com.dogplace.project2"
         minSdk 23
         targetSdk 33
-        versionCode 5
-        versionName "1.3"
+        versionCode 10
+        versionName "1.3.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -84,5 +86,6 @@ dependencies {
 
     // Encrypted Shared Preferences
     implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+
 
 }

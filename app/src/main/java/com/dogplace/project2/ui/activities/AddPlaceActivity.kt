@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -99,10 +99,10 @@ class AddPlaceActivity : AppCompatActivity(), OnMapReadyCallback {
             if (selectedLocation != null) {
                 savePlace(selectedLocation!!)
             } else {
-                Toast.makeText(
-                    this,
+                Snackbar.make(
+                    mBinding.root,
                     "Por favor, selecciona una ubicación en el mapa",
-                    Toast.LENGTH_LONG
+                    Snackbar.LENGTH_LONG
                 ).show()
             }
         }
@@ -140,7 +140,11 @@ class AddPlaceActivity : AppCompatActivity(), OnMapReadyCallback {
         val commentPlace: String = mBinding.tietPlaceComments.text.toString().trim()
 
         if (namePlace.isEmpty()) {
-            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_LONG).show()
+            Snackbar.make(
+                mBinding.root,
+                "Por favor, completa todos los campos",
+                Snackbar.LENGTH_LONG
+            ).show()
         } else {
             val token = Utils.getToken(this)
             lifecycleScope.launch {
@@ -185,10 +189,10 @@ class AddPlaceActivity : AppCompatActivity(), OnMapReadyCallback {
                             },
                             Response.ErrorListener {
                                 Log.i("ERROR: ", "Error al hacer la solicitud HTTP")
-                                Toast.makeText(
-                                    this@AddPlaceActivity,
+                                Snackbar.make(
+                                    mBinding.root,
                                     "Error en la conexión",
-                                    Toast.LENGTH_LONG
+                                    Snackbar.LENGTH_LONG
                                 ).show()
                             }) {
                             override fun getParams(): Map<String, String> {
@@ -215,36 +219,35 @@ class AddPlaceActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private suspend fun comprobarSiExiste(namePlace: String): Boolean =
-        suspendCancellableCoroutine { continuation ->
-            val token = Utils.getToken(this)
+    private suspend fun comprobarSiExiste(namePlace: String): Boolean {
+        val params = HashMap<String, String>()
+        params["NombreEstablecimiento"] = namePlace
+        params["access_token"] = Utils.getToken(this)
+
+        val response = makeNetworkRequest(Constants.PATH_EXPLORE, params)
+
+        val jsonObject = JSONObject(response)
+        return jsonObject.getBoolean("UbicacionRepetida")
+    }
+
+    private suspend fun makeNetworkRequest(url: String, params: HashMap<String, String>): String {
+        return suspendCancellableCoroutine { continuation ->
             val stringRequest = object : StringRequest(
-                Method.POST, Constants.PATH_EXPLORE,
+                Method.POST, url,
                 Response.Listener { response ->
-                    try {
-                        val jsonObject = JSONObject(response)
-                        val ubicacionRepetida = jsonObject.getBoolean("UbicacionRepetida")
-                        continuation.resume(ubicacionRepetida)
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                        continuation.resumeWithException(e)
-                    }
+                    continuation.resume(response)
                 },
                 Response.ErrorListener { error ->
-                    Log.e("ERROR: ", "Error al hacer la solicitud HTTP", error)
-                    Toast.makeText(this, "Error en la conexión", Toast.LENGTH_LONG).show()
                     continuation.resumeWithException(error)
                 }
             ) {
                 override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params["NombreEstablecimiento"] = namePlace
-                    params["access_token"] = token
                     return params
                 }
             }
             Volley.newRequestQueue(this).add(stringRequest)
         }
+    }
 
     override fun onResume() {
         super.onResume()

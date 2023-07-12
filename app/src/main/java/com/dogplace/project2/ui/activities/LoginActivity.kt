@@ -1,13 +1,12 @@
 package com.dogplace.project2.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import com.dogplace.project2.R
 import com.dogplace.project2.common.PrivateConstants
 import com.dogplace.project2.data.UserRepository
@@ -15,6 +14,7 @@ import com.dogplace.project2.data.remote.ApiService
 import com.dogplace.project2.data.remote.UserRepositoryImpl
 import com.dogplace.project2.databinding.ActivityLoginBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.mindrot.jbcrypt.BCrypt
@@ -78,17 +78,17 @@ class LoginActivity : AppCompatActivity() {
         val userEmail: String = mBinding.emailSignUp.text.toString().trim()
 
         if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || userEmail.isEmpty()) {
-            Toast.makeText(
-                this@LoginActivity,
-                "Por favor, rellene todos los campos",
-                Toast.LENGTH_LONG
+            Snackbar.make(
+                mBinding.root,
+                "Rellene todos los campos, por favor",
+                Snackbar.LENGTH_LONG
             ).show()
         } else {
             if (password != confirmPassword) {
-                Toast.makeText(
-                    this@LoginActivity,
+                Snackbar.make(
+                    mBinding.root,
                     "Las contraseñas no coinciden",
-                    Toast.LENGTH_LONG
+                    Snackbar.LENGTH_LONG
                 ).show()
             } else {
                 // Generar un salt aleatorio
@@ -116,20 +116,25 @@ class LoginActivity : AppCompatActivity() {
                                 .show()
                         } else {
                             // Usuario ya existe en la base de datos
-                            Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
+                            Snackbar.make(
+                                mBinding.root,
+                                message,
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                     } else {
-                        // Manejar el error
-                        Toast.makeText(
-                            this@LoginActivity,
+                        Snackbar.make(
+                            mBinding.root,
                             "Error en la conexión",
-                            Toast.LENGTH_LONG
+                            Snackbar.LENGTH_LONG
                         ).show()
                     }
                 } catch (e: Exception) {
-                    // Manejar la excepción
-                    Toast.makeText(this@LoginActivity, "Error en la conexión", Toast.LENGTH_LONG)
-                        .show()
+                    Snackbar.make(
+                        mBinding.root,
+                        "Error en la conexión",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
             }
         }
@@ -140,21 +145,22 @@ class LoginActivity : AppCompatActivity() {
         val password: String = mBinding.password.text.toString().trim()
 
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(
-                this@LoginActivity,
+            Snackbar.make(
+                mBinding.root,
                 "Rellene todos los campos, por favor",
-                Toast.LENGTH_LONG
+                Snackbar.LENGTH_LONG
             ).show()
         } else {
             try {
                 val response = userRepository.login(username, password)
                 if (response.isSuccessful) {
+                    Log.e("ConnectionSuccessful", response.toString())
                     val jsonObject = JSONObject(response.body()?.string()!!)
                     val status = jsonObject.getInt("status")
                     if (status == 1) {
                         // El usuario y la contraseña son correctos
                         val token = jsonObject.getString("token")
-                        saveToken(token)
+                        saveToken(this@LoginActivity, token)
                         mBinding.username.text?.clear()
                         mBinding.password.text?.clear()
                         mBinding.passwordConfirm.text?.clear()
@@ -163,38 +169,36 @@ class LoginActivity : AppCompatActivity() {
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                     } else {
+                        Log.e("ConnectionSuccessful2", response.toString())
                         // El usuario y/o la contraseña son incorrectos
-                        Toast.makeText(
-                            this@LoginActivity,
+                        Snackbar.make(
+                            mBinding.root,
                             "Nombre de usuario o contraseña incorrectos",
-                            Toast.LENGTH_LONG
+                            Snackbar.LENGTH_LONG
                         ).show()
                     }
                 } else {
-                    // Manejar el error
-                    Toast.makeText(this@LoginActivity, "Error en la conexión", Toast.LENGTH_LONG)
-                        .show()
+                    Log.e("ConnectionError", "Error en la conexión 1: $response")
+                    Snackbar.make(
+                        mBinding.root,
+                        "Error en la conexión.",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
             } catch (e: Exception) {
-                // Manejar la excepción
-                Toast.makeText(this@LoginActivity, "Error en la conexión", Toast.LENGTH_LONG).show()
+                Log.e("ConnectionError", "Error en la conexión 2: ${e.message}")
+                Snackbar.make(
+                    mBinding.root,
+                    "Error en la conexión",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
     }
 
-    private fun saveToken(token: String) {
-        val masterKey = MasterKey.Builder(this)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-
-        val sharedPreferences = EncryptedSharedPreferences.create(
-            this,
-            "MyEncryptedSharedPreferences",
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-
+    private fun saveToken(context: Context, token: String) {
+        val sharedPreferences =
+            context.getSharedPreferences("MySharedPreferences", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("token", token).apply()
     }
 }

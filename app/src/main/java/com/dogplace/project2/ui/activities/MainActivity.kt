@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ExploreActivity::class.java)
             startActivity(intent)
         }
-
     }
+
+    override fun onBackPressed() {
+        finishAffinity()
+    }
+
 }

@@ -65,21 +65,20 @@ class ExploreActivity : AppCompatActivity(), OnMapReadyCallback {
                 crearMarcadores()
             },
             onError = {
-                // Manejar el error
+                Log.i("msg", it.toString())
             })
 
-        val btnShop = mBinding.btnShop
-        val btnRestaurant = mBinding.btnRestaurant
-        val btnAccommodation = mBinding.btnAccommodation
-        val btnGreenZone = mBinding.btnGreenZone
-        val btnOthers = mBinding.btnOthers
+        val buttonMap = mapOf(
+            mBinding.btnShop to "Tienda",
+            mBinding.btnRestaurant to "Restaurante",
+            mBinding.btnAccommodation to "Alojamiento",
+            mBinding.btnGreenZone to "Zona Verde",
+            mBinding.btnOthers to "Otros"
+        )
 
-        buttonFeatures(btnShop, "Tienda")
-        buttonFeatures(btnRestaurant, "Restaurante")
-        buttonFeatures(btnAccommodation, "Alojamiento")
-        buttonFeatures(btnGreenZone, "Zona Verde")
-        buttonFeatures(btnOthers, "Otros")
-
+        buttonMap.forEach { (button, nombreMarcador) ->
+            buttonFeatures(button, nombreMarcador)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -182,15 +181,9 @@ class ExploreActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun crearMarcadores() {
         for (ubicacion in listaUbicaciones) {
-            val iconResId = when (ubicacion.tipoEstablecimiento) {
-                "Restaurante" -> R.drawable.ic_restaurant
-                "Alojamiento" -> R.drawable.ic_accommodation
-                "Zona Verde" -> R.drawable.ic_green_zone
-                "Tienda" -> R.drawable.ic_shopping
-                else -> {
-                    R.drawable.ic_addplace
-                }
-            }
+
+            val iconResId = getIconResource(ubicacion.tipoEstablecimiento)
+
             val markerOptions = MarkerOptions()
                 .position(LatLng(ubicacion.latitud!!, ubicacion.longitud!!))
                 .title(ubicacion.nombreEstablecimiento)
@@ -212,7 +205,6 @@ class ExploreActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun buttonFeatures(button: CompoundButton, nombreMarcador: String) {
-
         button.setOnClickListener {
             actualizarVisibilidadMarcadores(nombreMarcador)
         }
@@ -340,6 +332,16 @@ class ExploreActivity : AppCompatActivity(), OnMapReadyCallback {
 
         btnCancel.setOnClickListener {
             dialog.dismiss()
+        }
+    }
+
+    private fun getIconResource(tipoEstablecimiento: String): Int {
+        return when (tipoEstablecimiento) {
+            "Restaurante" -> R.drawable.ic_restaurant
+            "Alojamiento" -> R.drawable.ic_accommodation
+            "Zona Verde" -> R.drawable.ic_green_zone
+            "Tienda" -> R.drawable.ic_shopping
+            else -> R.drawable.ic_addplace
         }
     }
 
